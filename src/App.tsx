@@ -39,6 +39,14 @@ import {
 const REPO_NAME = "/mon-cv-interactif"; 
 const PROFILE_PIC_URL = `${REPO_NAME}/louiscockenpot.png`;
 
+// ---------------------------------------------------------------------------
+// ⚙️ CONFIGURATION DU MODÈLE IA
+// ---------------------------------------------------------------------------
+// POUR LE TEST ICI (PREVIEW) : gardez "gemini-2.5-flash-preview-09-2025"
+// POUR LE DÉPLOIEMENT FINAL (GITHUB) : remplacez par "gemini-1.5-flash" (plus stable)
+const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+// ---------------------------------------------------------------------------
+
 // --- BASE DE CONNAISSANCES (KNOWLEDGE BASE) ---
 const INITIAL_CONTEXT = `
 PROFIL CANDIDAT:
@@ -56,7 +64,7 @@ Diplômé d'un Master 2 en Data et Intelligence Artificielle (ESILV, UCLA), je s
 FORMATIONS:
 1. ESILV (École Supérieure d'Ingénieurs Léonard de Vinci), La Défense (09/20-08/25)
    - Master en Data et Intelligence Artificielle
-   - Cours: Mathématiques, Explainable AI, Neural Networks, MLOps, Data Analysis, Statistics, SQL, SCRUM.
+   - Cours: Mathématiques, Explainable AI, Neural Networks, MLOps, Data Analysis, Statistics, SQL, SCRUM, Soft Skills.
 2. UCLA Extension (University of California Los Angeles), Certificate in Data Science (09/24-03/25)
    - GPA: 3.8/4.0
    - Sujets: Deep Learning, Machine Learning (R & Python), Big Data (Hadoop), EDA (Tableau).
@@ -82,53 +90,49 @@ EXPÉRIENCES PROFESSIONNELLES:
    - Développement d'une Web App et d'un modèle de régression pour la prédiction de crues en France en temps réel.
    - Partenaire: Diot-Siaci (conseil et courtage d'assurance).
 
-PROJETS ACADEMIQUES:
+--- PROJETS ACADÉMIQUES & PERSONNELS (DÉTAILS COMPLETS) ---
+
 1. Système d'alertes de crues en temps réel (Diot-Siaci)
    - Dates : Sept 2023 - Mars 2024
    - Rôle : Data Scientist (Équipe de 5)
-   - Description : Système de détection et d'alerte sur les risques de crues en France.
-   - Tâches : Collecte/analyse données hydrométriques, Data Cleaning, Stockage SQL, Web App (Streamlit, Plotly), Modèle ML prédiction temps réel (Scikit-learn).
-   - Stack : Python (Pandas, Matplotlib, Seaborn, Numpy, Scipy), SQL, Streamlit.
+   - Objectif : Système de détection et d’alerte sur les risques de crues en France.
+   - Tâches : Collecte et analyse de données hydrométriques (Pandas, Matplotlib, Seaborn, Numpy, Scipy). Data Cleaning / Preprocessing. Stockage base de données (SQL).
+   - Réalisation : Visualisations / Web App (Streamlit, plotly). Développement d’un modèle de Machine Learning pour la prédiction de crues en temps réel (Scikit-learn).
 
 2. Modélisation prédictive - Réadmissions patients diabétiques (Hôpitaux US)
    - Dates : Oct 2023 - Déc 2023 (Équipe de 3)
-   - Description : Analyse approfondie du dataset "Diabetes 130-US hospitals 1999-2008".
-   - Réalisations : Analyse/Visualisation données, Modèle de prédiction (Random Forest), Déploiement Web App Streamlit.
-   - Stack : Python, Pandas, Matplotlib, Scikit-learn, Streamlit.
+   - Description : Travaux sur le dataset "Diabetes 130-US hospitals for years 1999-2008".
+   - Réalisations : Analyse et visualisation des données (Python, pandas, matplotlib). Modèle de prédiction, algorithme de forêt aléatoire (Scikit-learn). Déploiement d'une Web App pour la présentation des analyses et outil de prédiction (Streamlit).
 
 3. Analyse des Demandes de Valeurs Foncières (DVF)
    - Dates : Mars 2023 - Mai 2023 (Équipe de 2)
-   - Description : Analyse de 18 millions de transactions immobilières (actes notariés/cadastraux).
-   - Réalisations : Nettoyage massif de données, Visualisations (tendances prix/régions), Notebook Jupyter détaillé, App Web dynamique avec Django.
-   - Stack : Python, Django, Data Viz.
+   - Description : Analyse approfondie des données de transactions immobilières en France (18 millions de demandes).
+   - Réalisations : Nettoyage et analyse des données. Visualisations et interprétations (variations de prix/comparaisons régionales). Développement d'un Notebook interactif (Jupyter). Application Web dynamique avec Django.
 
 4. Base de Données et Interopérabilité (Gestion Fleuriste)
    - Dates : Mars 2023 - Mai 2023 (Équipe de 2)
-   - Description : Système de gestion commandes/clients/stocks.
-   - Réalisations : Modèle Entité-Association, SQL, Sérialisation, Interface graphique Windows en C#, Interconnexion base de données.
-   - Stack : MySQL, C#.
+   - Description : Développer un système permettant de gérer les commandes, les clients et les produits en stock pour un fleuriste.
+   - Réalisations : Conception modèle Entité-Association. Schéma relationnel. SQL. Mécanismes de sérialisation. Interface graphique Windows en C#.
 
-5. Traitement d'images & QR Codes
+5. Traitement d'images en C#
    - Dates : Jan 2022 - Mai 2022
-   - Description : Manipulation bas niveau d'images Bitmap 24 bits.
-   - Réalisations : Filtres (convolution, détection contours), Génération/Lecture QR Codes, Algorithme compression/décompression.
-   - Stack : C#, POO.
+   - Description : Manipulation d'images Bitmap 24 bits.
+   - Réalisations : Réécriture de la classe Bitmap C# (rotation, extraction, filtres convolution). Génération et lecture de QRCode. Algorithme de compression/décompression d'images.
 
-6. Jeu Scrabble
+6. Scrabble en C#
    - Dates : Sept 2021 - Jan 2022 (Équipe de 2)
-   - Description : Développement complet du jeu avec modélisation objet (Classes Joueur, Plateau, Dictionnaire...).
-   - Stack : C#, POO.
+   - Description : Développement du jeu Scrabble avec modélisation objet (Classes Joueur, Jeton, Plateau...).
 
 7. Projets Ingénierie / Mécatronique
    - Robot de cartographie (Sept-Déc 2021) : Robot autonome 2 roues, évitement obstacles (ultrasons), cartographie simplifiée (Arduino).
-   - PIX2 Instrument de musique (Oct 2021-Mai 2022) : Instrument 5 sons mécaniques contrôlés électroniquement (SolidWorks, Arduino).
-   - PIX1 Éolienne urbaine (Sept 2020-Juin 2021) : Conception 3D et prototypage (SolidWorks).
+   - PIX2 Instrument de musique (Oct 2021-Mai 2022) : Conception, modélisation et réalisation d’un instrument de musique innovant (SolidWorks, Arduino).
+   - PIX1 Éolienne urbaine (Sept 2020-Juin 2021) : Conception et modélisation 3D (SolidWorks), impression 3D.
 
 COMPÉTENCES TECHNIQUES (HARD SKILLS):
 - Langages: Python (Expert), R, SQL, C#, Java, JavaScript, TypeScript.
 - Frameworks Data/IA: TensorFlow, Scikit-learn, XGBoost, Pandas, Matplotlib, Seaborn.
-- Web/App: Streamlit, Dash, React.
-- Bases de données: Oracle, PostgreSQL, NoSQL.
+- Web/App: Streamlit, Dash, React, Django.
+- Bases de données: Oracle, PostgreSQL, NoSQL, MySQL.
 - Outils: Git, Docker, Jira, Microsoft Office, Hadoop.
 - Visualisation: Tableau, Power BI.
 
@@ -144,10 +148,6 @@ CENTRES D'INTÉRÊT:
 - Musique (Production logicielle)
 - Bénévolat: Accompagnement scolaire (A.C.E.L du Gros Caillou, 2020)
 - Ski (niveau compétition)
-
----
-[ESPACE POUR VOS AUTRES DOCUMENTS]
-(Copiez ici le texte de vos rapports de stage, lettres de motivation, etc.)
 `;
 
 // --- COMPOSANTS GRAPHIQUES & DONNÉES ---
@@ -208,14 +208,12 @@ const EXPERIENCE = [
 const FormattedText = ({ text }) => {
   if (!text) return null;
   
-  // Divise le texte en morceaux basés sur **gras**
   const parts = text.split(/(\*\*.*?\*\*)/g);
   
   return (
     <span className="whitespace-pre-wrap">
       {parts.map((part, index) => {
         if (part.startsWith('**') && part.endsWith('**')) {
-          // Enlève les ** et applique le style gras + couleur jaune
           return <strong key={index} className="font-bold text-yellow-300">{part.slice(2, -2)}</strong>;
         }
         return <span key={index}>{part}</span>;
@@ -224,12 +222,11 @@ const FormattedText = ({ text }) => {
   );
 };
 
-// --- GESTIONNAIRE API GEMINI (VERSION STABILISÉE) ---
+// --- GESTIONNAIRE API GEMINI ---
 
 const callGeminiAPI = async (prompt, apiKey, history) => {
   if (!apiKey) return null;
 
-  // 1. Context setup
   const systemInstruction = {
     parts: [{
       text: `You are the AI Assistant for Louis Cockenpot's interactive resume.
@@ -249,7 +246,6 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
     }]
   };
 
-  // 2. History formatting
   const contents = history
     .filter(msg => msg.text && msg.text.trim() !== "")
     .map(msg => ({
@@ -260,7 +256,7 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
   contents.push({ role: "user", parts: [{ text: prompt }] });
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -301,10 +297,7 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
   }
 };
 
-// --- COMPOSANT CHAT ---
-
 // --- UTILITAIRE DE DÉCHIFFREMENT ---
-// Cette fonction inverse la logique : Base64 Decode -> Reverse String
 const decryptKey = (encryptedKey) => {
   try {
     if (!encryptedKey) return "";
@@ -317,18 +310,6 @@ const decryptKey = (encryptedKey) => {
 };
 
 const ChatInterface = () => {
-  // ---------------------------------------------------------
-  // CONFIGURATION CLÉ API (VIA VARIABLE D'ENVIRONNEMENT)
-  // IMPORTANT: Pour le développement local avec Vite, décommentez la ligne import.meta
-  // ---------------------------------------------------------
-  
-  // Pour le déploiement local (décommentez cette ligne) :
-  const ENV_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
-  
-  // Pour l'environnement de prévisualisation actuel (ne pas toucher) :
-  // const ENV_API_KEY = ""; 
-  // ---------------------------------------------------------
-
   const [messages, setMessages] = useState([
     { 
       id: 1, 
@@ -341,16 +322,15 @@ const ChatInterface = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [useAI, setUseAI] = useState(false);
-  const messagesEndRef = useRef(null);
+  
+  // Référence vers le conteneur de messages pour le scroll interne
+  const chatContainerRef = useRef(null);
 
-  // Initialisation : Lecture et déchiffrement de la clé
   useEffect(() => {
     let encryptedKey = "";
-
     // -------------------------------------------------------------
-    // ⚠️ CONFIGURATION LOCAL VS PREVIEW
-    // Sur votre PC (Ubuntu), DÉCOMMENTEZ la ligne ci-dessous :
-    encryptedKey = import.meta.env.VITE_ENCRYPTED_KEY || "";
+    // ⚠️ LOCAL : DÉCOMMENTEZ LA LIGNE CI-DESSOUS SUR VOTRE ORDI
+    // encryptedKey = import.meta.env.VITE_ENCRYPTED_KEY || "";
     // -------------------------------------------------------------
 
     if (encryptedKey) {
@@ -360,7 +340,6 @@ const ChatInterface = () => {
         setUseAI(true);
       }
     } else {
-      // Fallback : vérifie si une clé est déjà stockée dans le navigateur
       const storedKey = localStorage.getItem('gemini_api_key');
       if (storedKey) {
         setApiKey(storedKey);
@@ -376,8 +355,15 @@ const ChatInterface = () => {
     setShowSettings(false);
   };
 
+  // SCROLL INTERNE UNIQUEMENT (Ne touche pas à window)
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      const { scrollHeight, clientHeight } = chatContainerRef.current;
+      chatContainerRef.current.scrollTo({
+        top: scrollHeight - clientHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(scrollToBottom, [messages, isTyping]);
@@ -414,15 +400,14 @@ const ChatInterface = () => {
   const generateLocalResponse = (query) => {
     const q = query.toLowerCase();
     if (q.includes('contact') || q.includes('email')) return "You can reach Louis at **louiscockenpot27@gmail.com**.";
-    if (q.includes('python') || q.includes('stack')) return "Louis is an expert in **Python** (TensorFlow, Pandas), **SQL**, and Data Engineering tools.";
+    if (q.includes('python') || q.includes('stack')) return "Louis is proficient in **Python** (TensorFlow, Pandas), **SQL**, and Data Engineering tools.";
     if (q.includes('safran')) return "At **Safran**, he achieved a **400x speedup** in simulation time using Deep Learning surrogate models.";
-    if (q.includes('api') || q.includes('key')) return "To enable the full AI experience, click the **settings icon** and enter an API Key (or set it in .env file).";
+    if (q.includes('api') || q.includes('key')) return "To enable the full AI experience, click the **settings icon** and enter an API Key.";
     return "I can tell you about his Skills, Experience, or Education. (Enable Gemini in settings for smarter answers!)";
   };
 
   return (
     <div className="flex flex-col h-[450px] bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-2xl relative">
-      {/* Header */}
       <div className="bg-slate-800 p-3 border-b border-slate-700 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -432,18 +417,13 @@ const ChatInterface = () => {
             {useAI ? "ai-mode: active" : "local-mode: active"}
           </span>
         </div>
-        {/* On cache le bouton settings si la clé est dans l'environnement pour éviter la confusion */}
-        {!ENV_API_KEY && (
-          <button 
-            onClick={() => setShowSettings(!showSettings)}
-            className="text-slate-400 hover:text-white transition-colors"
-          >
+        {!apiKey && (
+          <button onClick={() => setShowSettings(!showSettings)} className="text-slate-400 hover:text-white transition-colors">
             <Settings className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      {/* Settings Modal */}
       {showSettings && (
         <div className="absolute inset-0 z-20 bg-slate-900/95 flex items-center justify-center p-6 animate-fadeIn">
           <div className="bg-slate-800 p-6 rounded-xl border border-slate-600 w-full max-w-sm shadow-2xl">
@@ -470,14 +450,14 @@ const ChatInterface = () => {
         </div>
       )}
       
-      {/* Chat Area */}
-      <div className="flex-1 p-4 overflow-y-auto font-mono text-sm space-y-4 scrollbar-thin scrollbar-thumb-slate-600">
+      <div 
+        ref={chatContainerRef}
+        className="flex-1 p-4 overflow-y-auto font-mono text-sm space-y-4 scrollbar-thin scrollbar-thumb-slate-600"
+      >
         {messages.map((msg) => (
           <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[85%] p-3 rounded-lg shadow-sm ${
-              msg.sender === 'user' 
-                ? 'bg-blue-600 text-white rounded-br-none' 
-                : 'bg-slate-700 text-slate-200 rounded-bl-none border border-slate-600'
+              msg.sender === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-700 text-slate-200 rounded-bl-none border border-slate-600'
             }`}>
               {msg.sender === 'bot' && (
                 <div className="flex items-center gap-2 mb-1 text-xs opacity-50">
@@ -485,7 +465,6 @@ const ChatInterface = () => {
                   {useAI ? "Gemini 1.5" : "Local Bot"}
                 </div>
               )}
-              {/* USE THE FORMATTER HERE */}
               <FormattedText text={msg.text} />
             </div>
           </div>
@@ -499,10 +478,8 @@ const ChatInterface = () => {
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
       <form onSubmit={handleSend} className="p-3 bg-slate-800 border-t border-slate-700 flex gap-2">
         <input
           type="text"
@@ -524,6 +501,11 @@ const ChatInterface = () => {
 export default function ResumeApp() {
   const [activeTab, setActiveTab] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Scroll to top simple et efficace au changement d'onglet
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab]);
 
   const renderContent = () => {
     switch(activeTab) {
@@ -553,7 +535,6 @@ export default function ResumeApp() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col md:flex-row">
       
-      {/* Sidebar Navigation - Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 h-screen sticky top-0 z-10">
         <div className="p-6 border-b border-slate-100">
           <div className="w-20 h-20 mb-4 overflow-hidden rounded-full shadow-lg border-2 border-white ring-2 ring-blue-100 mx-auto">
@@ -577,16 +558,15 @@ export default function ResumeApp() {
 
         <div className="p-6 border-t border-slate-100 text-xs text-slate-400">
           <p>© 2025 Louis Cockenpot</p>
-          <p>Gemini Integration v2.3</p>
+          <p>Gemini Integration v6.0 (GOLD)</p>
         </div>
       </aside>
 
-      {/* Mobile Header */}
       <div className="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-30 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 overflow-hidden rounded-full border border-slate-200">
              <img 
-               src={PROFILE_PIC_URL} 
+               src={PROFILE_PIC_URL}
                alt="LC" 
                className="w-full h-full object-cover"
                onError={(e) => {(e.currentTarget as HTMLImageElement).src='https://ui-avatars.com/api/?name=Louis+Cockenpot&background=0D8ABC&color=fff'}} 
@@ -605,7 +585,6 @@ export default function ResumeApp() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 bg-white z-20 pt-20 px-4 md:hidden animate-fadeIn">
            <nav className="space-y-2">
@@ -617,7 +596,6 @@ export default function ResumeApp() {
         </div>
       )}
 
-      {/* Main Content Area */}
       <main className="flex-1 p-4 md:p-8 overflow-y-auto scroll-smooth">
         <div className="max-w-5xl mx-auto">
           {renderContent()}
@@ -689,6 +667,7 @@ const OverviewSection = () => (
                   strokeWidth={2}
                   fill="#6366f1"
                   fillOpacity={0.3}
+                  isAnimationActive={true} // Animation réactivée comme demandé (le fix scroll est ailleurs)
                 />
                 <Tooltip />
               </RadarChart>
@@ -747,12 +726,15 @@ const ExperienceSection = () => (
               </span>
             </div>
             <div className="text-slate-600 leading-relaxed mb-4 border-l-4 border-indigo-100 pl-4">
-              {/* On utilise .map() pour transformer chaque texte de la liste en un paragraphe <p> */}
-              {exp.description.map((phrase, index) => (
-                <p key={index} className="mb-2 last:mb-0">
-                  {phrase}
-                </p>
-              ))}
+              {Array.isArray(exp.description) ? (
+                exp.description.map((sentence, idx) => (
+                  <p key={idx} className="mb-2 last:mb-0">
+                    {sentence}
+                  </p>
+                ))
+              ) : (
+                <p>{exp.description}</p>
+              )}
             </div>
             <div className="flex flex-wrap gap-2">
               {exp.tags.map((tag, i) => (
