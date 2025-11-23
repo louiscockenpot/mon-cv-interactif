@@ -90,8 +90,7 @@ EXPÉRIENCES PROFESSIONNELLES:
    - Développement d'une Web App et d'un modèle de régression pour la prédiction de crues en France en temps réel.
    - Partenaire: Diot-Siaci (conseil et courtage d'assurance).
 
---- PROJETS ACADÉMIQUES & PERSONNELS (DÉTAILS COMPLETS) ---
-
+PROJETS ACADÉMIQUES:
 1. Système d'alertes de crues en temps réel (Diot-Siaci)
    - Dates : Sept 2023 - Mars 2024
    - Rôle : Data Scientist (Équipe de 5)
