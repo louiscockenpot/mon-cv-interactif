@@ -36,6 +36,9 @@ import {
   Cell
 } from 'recharts';
 
+const REPO_NAME = "/mon-cv-interactif"; 
+const PROFILE_PIC_URL = `${REPO_NAME}/louiscockenpot.png`;
+
 // --- BASE DE CONNAISSANCES (KNOWLEDGE BASE) ---
 const INITIAL_CONTEXT = `
 PROFIL CANDIDAT:
@@ -79,6 +82,48 @@ EXPÉRIENCES PROFESSIONNELLES:
    - Développement d'une Web App et d'un modèle de régression pour la prédiction de crues en France en temps réel.
    - Partenaire: Diot-Siaci (conseil et courtage d'assurance).
 
+PROJETS ACADEMIQUES:
+1. Système d'alertes de crues en temps réel (Diot-Siaci)
+   - Dates : Sept 2023 - Mars 2024
+   - Rôle : Data Scientist (Équipe de 5)
+   - Description : Système de détection et d'alerte sur les risques de crues en France.
+   - Tâches : Collecte/analyse données hydrométriques, Data Cleaning, Stockage SQL, Web App (Streamlit, Plotly), Modèle ML prédiction temps réel (Scikit-learn).
+   - Stack : Python (Pandas, Matplotlib, Seaborn, Numpy, Scipy), SQL, Streamlit.
+
+2. Modélisation prédictive - Réadmissions patients diabétiques (Hôpitaux US)
+   - Dates : Oct 2023 - Déc 2023 (Équipe de 3)
+   - Description : Analyse approfondie du dataset "Diabetes 130-US hospitals 1999-2008".
+   - Réalisations : Analyse/Visualisation données, Modèle de prédiction (Random Forest), Déploiement Web App Streamlit.
+   - Stack : Python, Pandas, Matplotlib, Scikit-learn, Streamlit.
+
+3. Analyse des Demandes de Valeurs Foncières (DVF)
+   - Dates : Mars 2023 - Mai 2023 (Équipe de 2)
+   - Description : Analyse de 18 millions de transactions immobilières (actes notariés/cadastraux).
+   - Réalisations : Nettoyage massif de données, Visualisations (tendances prix/régions), Notebook Jupyter détaillé, App Web dynamique avec Django.
+   - Stack : Python, Django, Data Viz.
+
+4. Base de Données et Interopérabilité (Gestion Fleuriste)
+   - Dates : Mars 2023 - Mai 2023 (Équipe de 2)
+   - Description : Système de gestion commandes/clients/stocks.
+   - Réalisations : Modèle Entité-Association, SQL, Sérialisation, Interface graphique Windows en C#, Interconnexion base de données.
+   - Stack : MySQL, C#.
+
+5. Traitement d'images & QR Codes
+   - Dates : Jan 2022 - Mai 2022
+   - Description : Manipulation bas niveau d'images Bitmap 24 bits.
+   - Réalisations : Filtres (convolution, détection contours), Génération/Lecture QR Codes, Algorithme compression/décompression.
+   - Stack : C#, POO.
+
+6. Jeu Scrabble
+   - Dates : Sept 2021 - Jan 2022 (Équipe de 2)
+   - Description : Développement complet du jeu avec modélisation objet (Classes Joueur, Plateau, Dictionnaire...).
+   - Stack : C#, POO.
+
+7. Projets Ingénierie / Mécatronique
+   - Robot de cartographie (Sept-Déc 2021) : Robot autonome 2 roues, évitement obstacles (ultrasons), cartographie simplifiée (Arduino).
+   - PIX2 Instrument de musique (Oct 2021-Mai 2022) : Instrument 5 sons mécaniques contrôlés électroniquement (SolidWorks, Arduino).
+   - PIX1 Éolienne urbaine (Sept 2020-Juin 2021) : Conception 3D et prototypage (SolidWorks).
+
 COMPÉTENCES TECHNIQUES (HARD SKILLS):
 - Langages: Python (Expert), R, SQL, C#, Java, JavaScript, TypeScript.
 - Frameworks Data/IA: TensorFlow, Scikit-learn, XGBoost, Pandas, Matplotlib, Seaborn.
@@ -98,6 +143,7 @@ CENTRES D'INTÉRÊT:
 - IT (Serveurs personnels, cloud privé)
 - Musique (Production logicielle)
 - Bénévolat: Accompagnement scolaire (A.C.E.L du Gros Caillou, 2020)
+- Ski (niveau compétition)
 
 ---
 [ESPACE POUR VOS AUTRES DOCUMENTS]
@@ -107,17 +153,17 @@ CENTRES D'INTÉRÊT:
 // --- COMPOSANTS GRAPHIQUES & DONNÉES ---
 
 const SKILL_DATA = [
-  { subject: 'Machine Learning', A: 95, fullMark: 100 },
+  { subject: 'Machine Learning', A: 90, fullMark: 100 },
   { subject: 'Data Engineering', A: 80, fullMark: 100 },
-  { subject: 'Web Dev (Fullstack)', A: 70, fullMark: 100 },
-  { subject: 'Statistics', A: 90, fullMark: 100 },
-  { subject: 'Finance/Business', A: 85, fullMark: 100 },
-  { subject: 'DevOps/MLOps', A: 65, fullMark: 100 },
+  { subject: 'Web Dev (Fullstack)', A: 60, fullMark: 100 },
+  { subject: 'Statistics', A: 85, fullMark: 100 },
+  { subject: 'Finance/Business', A: 65, fullMark: 100 },
+  { subject: 'DevOps/MLOps', A: 60, fullMark: 100 },
 ];
 
 const LANGUAGE_DATA = [
   { name: 'French', level: 100, label: 'Native' },
-  { name: 'English', level: 95, label: 'C1 (TOEIC 975)' },
+  { name: 'English', level: 78, label: 'C1 (TOEIC 975)' },
   { name: 'Spanish', level: 40, label: 'A2' },
 ];
 
@@ -127,15 +173,23 @@ const EXPERIENCE = [
     company: "Safran Electronics & Defense",
     role: "Data Science Engineer Intern",
     period: "04/25 - 09/25",
-    description: "Developed a surrogate model using deep neural networks to replace a physical simulator, achieving a 400x speedup. Optimized Faster R-CNN models.",
+    description: [
+      "Developed a surrogate model using supervised learning (dense neural network) to replace a physical simulator after a comparative study of regression methods.",
+      "Designed and integrated the model into an internal tool with a graphical user interface.",
+      "Achieved a 400x reduction in computation time.",
+      "Conducted performance analysis and optimization of object detection models (Faster R-CNN) for tuning optronic parameters. (Python, TensorFlow, Computer Vision)"
+    ],
     tags: ["Deep Learning", "TensorFlow", "Computer Vision"]
   },
   {
     id: 2,
-    company: "EDF - Nuclear Fuel Div.",
+    company: "EDF - Nuclear Fuel Division",
     role: "Developer / Data Analyst",
     period: "04/24 - 08/24",
-    description: "Automated multi-format data extraction with Python and created Power BI dashboards for nuclear fuel monitoring.",
+    description: ["Built an analysis tool for nuclear fuel monitoring.",
+      "Automated multi-format data extraction using Python scripts.",
+      "Developed a Power BI dashboard to enhance cross-team collaboration."
+    ],
     tags: ["Python Automation", "Power BI", "Data Engineering"]
   },
   {
@@ -143,7 +197,9 @@ const EXPERIENCE = [
     company: "Diot-Siaci x ESILV",
     role: "Industrial Innovation Project",
     period: "09/23 - 03/24",
-    description: "Real-time flood prediction web app and regression model for the French insurance market.",
+    description: ["Developed a web application and regression model for real-time flood prediction in France.",
+      "Year-long project with Diot-Siaci, a multi-specialist insurance brokerage and consulting group."
+    ],
     tags: ["Web App", "Predictive Analytics", "Insurance"]
   }
 ];
@@ -183,9 +239,10 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
       1. Answer ONLY based on the Context provided below.
       2. If the answer is not in the context, suggest contacting Louis directly at louiscockenpot27@gmail.com.
       3. Be concise, professional, but enthusiastic.
-      4. If asked about technical skills, be specific (mention libraries like TensorFlow, React, etc.).
+      4. If asked about technical skills, be specific (mention libraries like TensorFlow, scikit-learn, etc.).
       5. Use bold text (e.g. **Python**) to highlight key skills or achievements.
       6. Keep answers under 3-4 sentences unless asked for details.
+      7. CRITICAL: Do NOT use the word "expert" or claim mastery. Use terms like "proficient", "skilled", "experienced", or "advanced" instead.
       
       CONTEXT:
       ${INITIAL_CONTEXT}`
@@ -209,8 +266,14 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
       body: JSON.stringify({
         systemInstruction: systemInstruction,
         contents: contents,
+        safetySettings: [
+            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+            { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+            { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+        ],
         generationConfig: {
-          maxOutputTokens: 500,
+          maxOutputTokens: 1000,
           temperature: 0.7
         }
       })
@@ -240,6 +303,19 @@ const callGeminiAPI = async (prompt, apiKey, history) => {
 
 // --- COMPOSANT CHAT ---
 
+// --- UTILITAIRE DE DÉCHIFFREMENT ---
+// Cette fonction inverse la logique : Base64 Decode -> Reverse String
+const decryptKey = (encryptedKey) => {
+  try {
+    if (!encryptedKey) return "";
+    const reversed = atob(encryptedKey);
+    return reversed.split('').reverse().join('');
+  } catch (e) {
+    console.error("Erreur de déchiffrement", e);
+    return "";
+  }
+};
+
 const ChatInterface = () => {
   // ---------------------------------------------------------
   // CONFIGURATION CLÉ API (VIA VARIABLE D'ENVIRONNEMENT)
@@ -267,14 +343,24 @@ const ChatInterface = () => {
   const [useAI, setUseAI] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Initialisation : Vérifie d'abord la variable d'env, sinon le localStorage
+  // Initialisation : Lecture et déchiffrement de la clé
   useEffect(() => {
-    if (ENV_API_KEY && ENV_API_KEY.length > 10) {
-      // Si une clé est trouvée dans l'environnement (.env), on l'utilise
-      setApiKey(ENV_API_KEY);
-      setUseAI(true);
+    let encryptedKey = "";
+
+    // -------------------------------------------------------------
+    // ⚠️ CONFIGURATION LOCAL VS PREVIEW
+    // Sur votre PC (Ubuntu), DÉCOMMENTEZ la ligne ci-dessous :
+    encryptedKey = import.meta.env.VITE_ENCRYPTED_KEY || "";
+    // -------------------------------------------------------------
+
+    if (encryptedKey) {
+      const decrypted = decryptKey(encryptedKey);
+      if (decrypted) {
+        setApiKey(decrypted);
+        setUseAI(true);
+      }
     } else {
-      // Sinon, on regarde si l'utilisateur en a entré une manuellement (localStorage)
+      // Fallback : vérifie si une clé est déjà stockée dans le navigateur
       const storedKey = localStorage.getItem('gemini_api_key');
       if (storedKey) {
         setApiKey(storedKey);
@@ -470,11 +556,16 @@ export default function ResumeApp() {
       {/* Sidebar Navigation - Desktop */}
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 h-screen sticky top-0 z-10">
         <div className="p-6 border-b border-slate-100">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg mb-3">
-            LC
+          <div className="w-20 h-20 mb-4 overflow-hidden rounded-full shadow-lg border-2 border-white ring-2 ring-blue-100 mx-auto">
+             <img 
+               src={PROFILE_PIC_URL}
+               alt="Louis Cockenpot" 
+               className="w-full h-full object-cover"
+               onError={(e) => {(e.currentTarget as HTMLImageElement).src='https://ui-avatars.com/api/?name=Louis+Cockenpot&background=0D8ABC&color=fff&size=128'}} 
+             />
           </div>
-          <h1 className="font-bold text-lg text-slate-900">Louis Cockenpot</h1>
-          <p className="text-xs text-slate-500 font-mono">Data & AI Engineer</p>
+          <h1 className="font-bold text-lg text-slate-900 text-center">Louis Cockenpot</h1>
+          <p className="text-xs text-slate-500 font-mono text-center">Data & AI Engineer</p>
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
@@ -493,8 +584,13 @@ export default function ResumeApp() {
       {/* Mobile Header */}
       <div className="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-30 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
-            LC
+          <div className="w-10 h-10 overflow-hidden rounded-full border border-slate-200">
+             <img 
+               src={PROFILE_PIC_URL} 
+               alt="LC" 
+               className="w-full h-full object-cover"
+               onError={(e) => {(e.currentTarget as HTMLImageElement).src='https://ui-avatars.com/api/?name=Louis+Cockenpot&background=0D8ABC&color=fff'}} 
+             />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-slate-900 text-sm">Louis Cockenpot</span>
@@ -604,7 +700,7 @@ const OverviewSection = () => (
           <div className="relative z-10">
             <h3 className="text-lg font-semibold mb-2">Looking for a Data Scientist?</h3>
             <p className="text-blue-100 text-sm mb-4">
-              Specialized in Neural Networks, MLOps, and Statistical Analysis with a strong engineering background.
+              Specialized in Machine Learning, Data Management, and Statistical Analysis with a strong engineering background.
             </p>
             <a 
               href="mailto:louiscockenpot27@gmail.com"
@@ -650,9 +746,14 @@ const ExperienceSection = () => (
                 {exp.period}
               </span>
             </div>
-            <p className="text-slate-600 leading-relaxed mb-4 border-l-4 border-indigo-100 pl-4">
-              {exp.description}
-            </p>
+            <div className="text-slate-600 leading-relaxed mb-4 border-l-4 border-indigo-100 pl-4">
+              {/* On utilise .map() pour transformer chaque texte de la liste en un paragraphe <p> */}
+              {exp.description.map((phrase, index) => (
+                <p key={index} className="mb-2 last:mb-0">
+                  {phrase}
+                </p>
+              ))}
+            </div>
             <div className="flex flex-wrap gap-2">
               {exp.tags.map((tag, i) => (
                 <span key={i} className="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-medium rounded border border-indigo-100">
@@ -688,7 +789,7 @@ const SkillsSection = () => (
               <div className="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-blue-500 rounded-full" 
-                  style={{ width: skill === 'Python' ? '95%' : skill === 'SQL' ? '85%' : '70%' }} 
+                  style={{ width: skill === 'Python' ? '85%' : skill === 'SQL' ? '80%' : skill === 'Java' ? '60%' : '70%' }} 
                 />
               </div>
             </div>
@@ -712,15 +813,15 @@ const SkillsSection = () => (
           </ResponsiveContainer>
         </div>
         <div className="flex justify-between text-xs text-slate-500 px-4">
-           <span>Native</span>
-           <span>C1 Fluent</span>
            <span>Basic</span>
+           <span>C1 Advanced</span>
+           <span>Native</span>
         </div>
       </div>
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm md:col-span-2">
         <h3 className="font-semibold mb-4 text-slate-800">Frameworks & Data Tools</h3>
         <div className="flex flex-wrap gap-3">
-          {["TensorFlow", "Scikit-learn", "XGBoost", "Pandas", "Streamlit", "React", "Docker", "Git", "Hadoop", "Power BI"].map((item, i) => (
+          {["TensorFlow", "Scikit-learn", "XGBoost", "Pandas", "Matplotlib", "Seaborn", "Plotly-express", "Streamlit", "Docker", "Git", "Hadoop", "Power BI", "Office", "Jira"].map((item, i) => (
             <span key={i} className="px-4 py-2 bg-slate-50 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 border border-slate-200 rounded-lg text-sm transition-all cursor-default">
               {item}
             </span>
@@ -744,9 +845,9 @@ const EducationSection = () => (
     </div>
     <div className="grid grid-cols-1 gap-6">
       {[
-        { school: "ESILV", degree: "Master Data & AI", year: "2025", desc: "Maths, Neural Networks, MLOps" },
-        { school: "UCLA Extension", degree: "Certif. Data Science", year: "2025", desc: "GPA 3.8 - Deep Learning, Big Data" },
-        { school: "EMLV", degree: "Master Finance", year: "2025", desc: "Corporate Finance, Management" },
+        { school: "ESILV", degree: "Master's Degree in Data & Artificial Intelligence", year: "2025", desc: "Mathematics, Explainable AI, Neural Networks, MLOps, Data Analysis, Statistics, SQL, SCRUM, Soft Skills" },
+        { school: "UCLA Extension", degree: "Certificate in Data Science", year: "2025", desc: "GPA 3.8 - Deep Learning, Machine Learning (R & Python), Big Data Management (Hadoop), EDA (Tableau)" },
+        { school: "EMLV", degree: "Master's Degree in Corporate Finance - Double Degree (Engineering + Business)", year: "2025", desc: "IFRS, Cash Management, European & International Law, Financial Decisions, Entrepreneurship" },
         { school: "Hanyang Univ.", degree: "Exchange", year: "2022", desc: "Engineering College, Seoul" }
       ].map((edu, idx) => (
         <div key={idx} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-6 hover:border-purple-200 transition-colors">
