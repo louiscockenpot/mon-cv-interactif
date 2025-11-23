@@ -131,7 +131,7 @@ EXPÉRIENCES PROFESSIONNELLES:
 COMPÉTENCES TECHNIQUES (HARD SKILLS):
 - Langages: Python (Expert), R, SQL, C#, Java, JavaScript, TypeScript.
 - Frameworks Data/IA: TensorFlow, Scikit-learn, XGBoost, Pandas, Matplotlib, Seaborn.
-- Web/App: Streamlit, Dash, React, Django.
+- Web/App: Streamlit, Dash, Django.
 - Bases de données: Oracle, PostgreSQL, NoSQL, MySQL.
 - Outils: Git, Docker, Jira, Microsoft Office, Hadoop.
 - Visualisation: Tableau, Power BI.
@@ -330,7 +330,7 @@ const ChatInterface = () => {
     let encryptedKey = "";
     // -------------------------------------------------------------
     // ⚠️ LOCAL : DÉCOMMENTEZ LA LIGNE CI-DESSOUS SUR VOTRE ORDI
-    // encryptedKey = import.meta.env.VITE_ENCRYPTED_KEY || "";
+    encryptedKey = import.meta.env.VITE_ENCRYPTED_KEY || "";
     // -------------------------------------------------------------
 
     if (encryptedKey) {
@@ -558,7 +558,7 @@ export default function ResumeApp() {
 
         <div className="p-6 border-t border-slate-100 text-xs text-slate-400">
           <p>© 2025 Louis Cockenpot</p>
-          <p>Gemini Integration v6.0 (GOLD)</p>
+          <p>Gemini Integration v0.9</p>
         </div>
       </aside>
 
